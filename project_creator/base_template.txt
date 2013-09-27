@@ -1,0 +1,60 @@
+
+Componenti utilizzati:
+<components>
+
+Isolamento del classloader 
+Verificare:
+<classloading_isolation>
+
+Il contenuto deve essere:
+<classloading xmlns="urn:jboss:classloading:1.0" 
+	domain="NomeEAR.ear" 
+	export-all="NON_EMPTY" 
+	import-all="false" 
+	parent-first="false" > 
+</classloading>
+
+Rimuovere altre eventuali configurazioni del classloading dai file jboss-web.xml e da jboss-app.xml e rimuovere jboss-classloading.xml dalla WEB-INF del war.
+
+
+Uso di Spring, verificare eventuale esigenza di includere Snowdrop -http://www.jboss.org/snowdrop- (verifica a runtime)
+<spring>
+
+Uso di JSF, verificare versione e compatibilità.
+<jsf>
+
+Hibernate nella dir lib:
+non supportabile, da rimuovere e usare quello della EAP
+<hibernate>
+
+Dipendenza da cxf, valutare se:
+	Eliminare cxf e usare quello fornito da jboss:
+		Versione dell'applicativo: LEGGI VERSIONE NELLE LIB SOTTO!
+		Versione fornita da jboss: 2.2.12
+	Lasciare cxf nel pacchetto
+Librerie:
+<apache_cxf>
+
+Rimuovere le seguenti lib:
+<lib_to_remove>
+
+<lib_classloading_problem>
+
+La versione di seam in uso su jboss EAP 5.1.2 è la 2.2.5.EAP5, una versione patchata da red hat, con security e bug fixes. Sostituire i seguenti jar, con quelli forniti JBoss EAP (directory seam) per ottenere supporto anche su seam.
+<jboss-seam>
+
+I file descrittori XML all'interno delle applicazioni JEE vengono validati in modo “strict” da EAP 5.x
+I file XML da verificare sono i seguenti: 
+<xml_files>
+
+Verificare linee guida log4j (Appendice)
+<log4j_xml>
+
+Verificare se i driver jdbc sono inclusi nelle lib, se si eliminarli.
+<jdbc_drivers>
+
+* utilizza la org.hibernate.classic.Session un'estensione Session API, inclusi tutti i metodi deprecati di Hibernate 2. Questa interfaccia è fornita per permettere una più facile migrazione. I nuovi applicativi dovrebbero essere sviluppati usando org.hibernate.Session.
+<hibernate_session> 
+
+Risolvere le dipendenze circolari:
+<circular_dependencies>
